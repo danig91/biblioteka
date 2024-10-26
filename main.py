@@ -50,17 +50,28 @@ def book_list_view(library):
             print(title)
 
 
-def add_book(title, author, year):
-    new_book = {
-        title: {
+def add_book(library):
+    def add_author_and_year():
+        author = input("Введите автора произведения:\n")
+        year = int(input("Введите год издания книги:\n"))
+        library[title] = {
             "author": author,
             "year": year,
             "is_availability": None
         }
-    }
-    print(f"Добавлена/обновлена книга \"{title}\".\n"
-          f"Автор: {author}.\nГод издания: {year}.\n")
-    return library.update(new_book)
+
+    title = input("Введите название книги:\n")
+    if title in library:
+        print(f"\nКнига с названием \"{title}\" существует.\n"
+              f"Обновите информацию о ней!\n")
+
+        add_author_and_year()
+
+        print(f"Информация о книге \"{title}\" обновлена.")
+    else:
+        add_author_and_year()
+
+        print(f"Добавлена новая книга \"{title}\".\n")
 
 
 def run():
@@ -73,16 +84,7 @@ def run():
             if info == 1:
                 book_list_view(library)
             elif info == 2:
-                title = input("Введите название книги:\n")
-
-                for book_name in library.keys():
-                    if book_name == title:
-                        print(f"\nКнига с названием \"{title}\" существует.\n"
-                              f"Обновите информацию о ней!\n")
-
-                author = input("Введите автора произведения:\n")
-                year = int(input("Введите год издания книги:\n"))
-                add_book(title, author, year)
+                add_book(library)
             elif info == 0:
                 break
             else:
