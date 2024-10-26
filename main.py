@@ -58,6 +58,8 @@ def add_book(title, author, year):
             "is_availability": None
         }
     }
+    print(f"Добавлена/обновлена книга \"{title}\".\n"
+          f"Автор: {author}.\nГод издания: {year}.\n")
     return library.update(new_book)
 
 
@@ -81,8 +83,6 @@ def run():
                 author = input("Введите автора произведения:\n")
                 year = int(input("Введите год издания книги:\n"))
                 add_book(title, author, year)
-                print(f"Добавлена/обновлена книга \"{title}\".\n"
-                      f"Автор: {author}.\nГод издания: {year}.\n")
             elif info == 0:
                 break
             else:
