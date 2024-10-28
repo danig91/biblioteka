@@ -92,7 +92,7 @@ def remove_book(library):
 
 
 def issue_return_book(library, is_availability, issue_return):
-    title = input("Введите название книги для выдачи:\n")
+    title = input("Введите название книги:\n")
     if title in library:
         library[title] = {
             "author": library[title].get("author"),
