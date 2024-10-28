@@ -4,7 +4,6 @@
 # которая выводит в консоль названия всех книг в библиотеке.
 # Если в библиотеке нет книг, функция выводит сообщение об этом.
 
-
 # Реализуйте функцию `add_book(title, author, year)`, которая добавляет книгу
 # в словарь `library`. Поле `наличие` при добавлении новой книги должно быть `None`
 # (означает, что книга в библиотеке, но не определен ее статус).
@@ -12,6 +11,11 @@
 # программа должна предложить обновить информацию о ней.
 # Функция должна вывести сообщение об успешном добавлении/обновлении
 # информации о книге с ее названием
+
+# Реализуйте функцию `remove_book(title)`, которая удаляет книгу из словаря.
+# Если книга не найдена, программа должна вывести сообщение об этом.
+# После удаления функция должна вывести сообщение об удалении книги
+# с ее названием.
 
 library = {
     "Отцы и дети": {
@@ -51,7 +55,7 @@ def book_list_view(library):
 
 
 def add_book(library):
-    def add_author_and_year():
+    def add_author_and_year(added_or_updated):
         author = input("Введите автора произведения:\n")
         year = int(input("Введите год издания книги:\n"))
         library[title] = {
@@ -59,19 +63,27 @@ def add_book(library):
             "year": year,
             "is_availability": None
         }
+        print(f"\nКнига с названием \"{title}\" {added_or_updated}.\n"
+              f"Автор: {author}.\n"
+              f"Год: {year}.\n")
 
     title = input("Введите название книги:\n")
     if title in library:
         print(f"\nКнига с названием \"{title}\" существует.\n"
               f"Обновите информацию о ней!\n")
 
-        add_author_and_year()
-
-        print(f"Информация о книге \"{title}\" обновлена.")
+        add_author_and_year("обновлена")
     else:
-        add_author_and_year()
+        add_author_and_year("добавлена")
 
-        print(f"Добавлена новая книга \"{title}\".\n")
+
+def remove_book(library):
+    title = input("Введите название книги для удаления:\n")
+    if title not in library:
+        print(f"\nКнига \"{title}\" не найдена.\n")
+    else:
+        del library[f"{title}"]
+        print(f"\nКнига \"{title}\" удалена.\n")
 
 
 def run():
@@ -80,11 +92,14 @@ def run():
             info = int(input("Введите число соответствующее действию:\n"
                              "1 - Показать список книг\n"
                              "2 - Добавить книгу\n"
+                             "3 - Удалить книгу\n"
                              "0 - Завершить программу\n"))
             if info == 1:
                 book_list_view(library)
             elif info == 2:
                 add_book(library)
+            elif info == 3:
+                remove_book(library)
             elif info == 0:
                 break
             else:
