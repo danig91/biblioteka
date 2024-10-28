@@ -17,6 +17,11 @@
 # После удаления функция должна вывести сообщение об удалении книги
 # с ее названием.
 
+# Реализуйте функцию `issue_book(title)`, которая отмечает книгу
+# как выданную(`наличие` становится `False`).
+# Реализуйте функцию `return_book(title)`, которая отмечает книгу
+# как вернувшуюся в библиотеку(`наличие` становится `True`).
+
 library = {
     "Отцы и дети": {
         "author": "И. С. Тургенев",
@@ -82,8 +87,21 @@ def remove_book(library):
     if title not in library:
         print(f"\nКнига \"{title}\" не найдена.\n")
     else:
-        del library[f"{title}"]
+        del library[title]
         print(f"\nКнига \"{title}\" удалена.\n")
+
+
+def issue_return_book(library, is_availability, issue_return):
+    title = input("Введите название книги для выдачи:\n")
+    if title in library:
+        library[title] = {
+            "author": library[title].get("author"),
+            "year": library[title].get("year"),
+            "is_availability": is_availability
+        }
+        print(f"\nКнига \"{title}\" {issue_return}.\n")
+    else:
+        print("\nНет такой книги.\n")
 
 
 def run():
@@ -93,6 +111,8 @@ def run():
                              "1 - Показать список книг\n"
                              "2 - Добавить книгу\n"
                              "3 - Удалить книгу\n"
+                             "4 - Выдать книгу\n"
+                             "5 - Вернуть книгу\n"
                              "0 - Завершить программу\n"))
             if info == 1:
                 book_list_view(library)
@@ -100,6 +120,10 @@ def run():
                 add_book(library)
             elif info == 3:
                 remove_book(library)
+            elif info == 4:
+                issue_return_book(library, False, "выдана")
+            elif info == 5:
+                issue_return_book(library, True, "возвращена")
             elif info == 0:
                 break
             else:
