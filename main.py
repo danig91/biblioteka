@@ -22,6 +22,10 @@
 # Реализуйте функцию `return_book(title)`, которая отмечает книгу
 # как вернувшуюся в библиотеку(`наличие` становится `True`).
 
+# Реализуйте функцию `find_book(title)`, которая выводит информацию
+# о книге по ее названию.
+# Если книга не найдена, должно выводиться соответствующее сообщение.
+
 library = {
     "Отцы и дети": {
         "author": "И. С. Тургенев",
@@ -46,7 +50,7 @@ library = {
     "Мёртвые души": {
         "author": "Н. В. Гоголь",
         "year": 1842,
-        "is_availability": True
+        "is_availability": None
     }
 }
 
@@ -97,7 +101,7 @@ def issue_or_return_book(library, is_availability, issue_or_return):
     if title not in library:
         print("\nНет такой книги.\n")
 
-    elif library[title].get("is_availability") != is_availability:
+    elif library[title]["is_availability"] != is_availability:
         library[title] = {
             "author": library[title].get("author"),
             "year": library[title].get("year"),
@@ -105,8 +109,21 @@ def issue_or_return_book(library, is_availability, issue_or_return):
         }
         print(f"\nКнига \"{title}\" {issue_or_return}.\n")
 
-    elif library[title].get("is_availability") == is_availability:
+    elif library[title]["is_availability"] == is_availability:
         print(f"\nКнига \"{title}\" уже {issue_or_return}.\n")
+
+
+def find_book(library):
+    title = input("Введите название книги:\n")
+
+    if title in library:
+        author = library[title]["author"]
+        year = library[title]["year"]
+        print(f"\nПроизведение: \"{title}\"\n"
+              f"Автор произведения: {author}\n"
+              f"Год издания: {year}\n")
+    else:
+        print("\nНет такой книги.\n")
 
 
 def run():
@@ -118,6 +135,7 @@ def run():
                              "3 - Удалить книгу\n"
                              "4 - Выдать книгу\n"
                              "5 - Вернуть книгу\n"
+                             "6 - Поиск книги\n"
                              "0 - Завершить программу\n"))
             if info == 1:
                 book_list_view(library)
@@ -129,6 +147,8 @@ def run():
                 issue_or_return_book(library, False, "выдана")
             elif info == 5:
                 issue_or_return_book(library, True, "возвращена")
+            elif info == 6:
+                find_book(library)
             elif info == 0:
                 break
             else:
