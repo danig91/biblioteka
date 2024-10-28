@@ -31,7 +31,7 @@ library = {
     "Мастер и Маргарита": {
         "author": "М. А. Булгаков",
         "year": 1966,
-        "is_availability": True
+        "is_availability": False
     },
     "Евгений Онегин": {
         "author": "А. С. Пушкин",
@@ -91,17 +91,22 @@ def remove_book(library):
         print(f"\nКнига \"{title}\" удалена.\n")
 
 
-def issue_return_book(library, is_availability, issue_return):
+def issue_or_return_book(library, is_availability, issue_or_return):
     title = input("Введите название книги:\n")
-    if title in library:
+
+    if title not in library:
+        print("\nНет такой книги.\n")
+
+    elif library[title].get("is_availability") != is_availability:
         library[title] = {
             "author": library[title].get("author"),
             "year": library[title].get("year"),
             "is_availability": is_availability
         }
-        print(f"\nКнига \"{title}\" {issue_return}.\n")
-    else:
-        print("\nНет такой книги.\n")
+        print(f"\nКнига \"{title}\" {issue_or_return}.\n")
+
+    elif library[title].get("is_availability") == is_availability:
+        print(f"\nКнига \"{title}\" уже {issue_or_return}.\n")
 
 
 def run():
@@ -121,9 +126,9 @@ def run():
             elif info == 3:
                 remove_book(library)
             elif info == 4:
-                issue_return_book(library, False, "выдана")
+                issue_or_return_book(library, False, "выдана")
             elif info == 5:
-                issue_return_book(library, True, "возвращена")
+                issue_or_return_book(library, True, "возвращена")
             elif info == 0:
                 break
             else:
