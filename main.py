@@ -26,6 +26,11 @@
 # о книге по ее названию.
 # Если книга не найдена, должно выводиться соответствующее сообщение.
 
+# В функции `find_book(title)` сделайте проверку на значение поля `наличие`.
+# Если оно `None`, выводите сообщение: "Книга в библиотеке, но ее статус не определен".
+# Если `False`, выводите: "Книга выдана".
+# Если `True`, выводите: "Книга доступна".
+
 library = {
     "Отцы и дети": {
         "author": "И. С. Тургенев",
@@ -114,14 +119,29 @@ def issue_or_return_book(library, is_availability, issue_or_return):
 
 
 def find_book(library):
+    def get_availability(library, title):
+        availability = library[title]["is_availability"]
+        status_availability = ""
+
+        if availability is None:
+            status_availability = "Книга в библиотеке, но ее статус не определен"
+        elif availability:
+            status_availability = "Книга доступна"
+        elif not availability:
+            status_availability = "Книга выдана"
+
+        return status_availability
+
     title = input("Введите название книги:\n")
 
     if title in library:
         author = library[title]["author"]
         year = library[title]["year"]
+
         print(f"\nПроизведение: \"{title}\"\n"
               f"Автор произведения: {author}\n"
-              f"Год издания: {year}\n")
+              f"Год издания: {year}\n"
+              f"Статус: {get_availability(library, title)}\n")
     else:
         print("\nНет такой книги.\n")
 
